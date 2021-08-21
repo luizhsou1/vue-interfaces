@@ -22,18 +22,28 @@
         aside {
             float: left;
             width: 30vw;
+            transition: transform .3s;
+        }
+
+        .open > aside {
+            transform: translate(-33vw, 0);
         }
 
         main {
             margin-left: 33vw;
+            transition: margin-left .3s;
+        }
+
+        .open > main {
+            margin-left: 0;
         }
     </style>
 </head>
 
 <body>
 
-    <div id="app">
-        <my-nav></my-nav>
+    <div id="app" :class="{'open': open}">
+        <my-nav @toggle="updateOpen"></my-nav>
         <my-aside></my-aside>
         <my-main></my-main>
     </div>
@@ -41,7 +51,10 @@
     <script type="text/javascript">
 
         Vue.component('my-nav', {
-            template: `<nav> My Nav </nav>`
+            template: `<nav> <button @click="$emit('toggle')">#</button> {{ title }} </nav>`,
+            data: () => ({
+                title: 'My Pretty Nav' 
+            })
         })
 
         Vue.component('my-main', {
@@ -49,17 +62,31 @@
         })
 
         Vue.component('my-aside', {
-            template: `<aside> My Aside </aside>`
+            template: `<aside v-html="title"> My Aside </aside>`,
+            data: () => ({
+                title: 'My <b>Beauty</b> Aside' 
+            })
         })
 
         Vue.component('my-section', {
-            template: `<section> My Section </section>`
+            template: `<section :style="style"> My Section </section>`,
+            data: () => ({
+                style: {
+                    background: 'yellow'
+                }
+            })
         })
 
         new Vue({
             el: '#app',
             data: {
-                message: 'phpzm.rocks'
+                message: 'phpzm.rocks',
+                open: false
+            },
+            methods: {
+                updateOpen() {
+                    this.open = !this.open
+                }
             }
         })
     </script>

@@ -43,7 +43,7 @@
 <body>
 
     <div id="app" :class="{'open': open}">
-        <my-nav @toggle="updateOpen"></my-nav>
+        <my-nav @toggle="updateOpen" :message="message"></my-nav>
         <my-aside></my-aside>
         <my-main></my-main>
     </div>
@@ -51,10 +51,8 @@
     <script type="text/javascript">
 
         Vue.component('my-nav', {
-            template: `<nav> <button @click="$emit('toggle')">#</button> {{ title }} </nav>`,
-            data: () => ({
-                title: 'My Pretty Nav' 
-            })
+            props: ['message'],
+            template: `<nav> <button @click="$emit('toggle')">#</button> {{ message }} </nav>`
         })
 
         Vue.component('my-main', {
@@ -80,7 +78,7 @@
         new Vue({
             el: '#app',
             data: {
-                message: 'phpzm.rocks',
+                message: 'Interface Simples com Vue.js',
                 open: false
             },
             methods: {

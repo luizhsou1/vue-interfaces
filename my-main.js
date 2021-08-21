@@ -1,4 +1,5 @@
 Vue.component('my-main', {
+    mixins: [ Mixin ],
     template: `
         <main>
             <div class="fill">
